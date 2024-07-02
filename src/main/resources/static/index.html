@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Spring Boot Properties</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style >
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        body {
+            min-height: 100vh;
+            background-image: url("https://download.logo.wine/logo/Spring_Framework/Spring_Framework-Logo.wine.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 70%;
+            position: absolute;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function propertiesService(filter) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/find/" + filter,
+                    data: '$format=json',
+                    dataType: 'json',
+                    success: function (data) {
+                        var total = 0;
+                        $("#propTable tbody").empty()
+                        $.each(data, function (d, results) {
+                            $("#propTable tbody").append(
+                                `<tr>
+                                    <td class="text-nowrap">${results.nome}</td>
+                                    <td class="text-nowrap">${results.categoria}</td>
+                                    <td class="text-nowrap">${results.subcategoria}</td>
+                                    <td class="text-nowrap">${results.valor}</td>
+                                    <td class="text-nowrap">${results.descricao}</td>
+                                 </tr>`)
+                            total++;
+                        })
+                        $("#results").text(total + " encontrados");
+                    }
+                });
+            }
+
+            var minlength = 1;
+
+            $("#search").keypress(function (e) {
+                if (e.which == 13) {
+                    var value = $(this).val();
+                    if (value.length >= minlength) {
+                        propertiesService(value);
+                    }
+                    return false;
+                }
+            });
+
+        });
+    </script>
+
+    <div class="jumbotron">
+        <h1><a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html"
+               target="_BLANK">Primeira aplicação spring boot</a></h1>
+        <form>
+            Buscar:
+            <input autofocus="autofocus" class="form-control" id="search" type="text"/>
+        </form>
+        <div class="alert alert-info fade in" id="results"></div>
+    </div>
+    <table class="table table-hover" id="propTable">
+        <tbody></tbody>
+    </table>
+</div>
+</body>
+</html>
