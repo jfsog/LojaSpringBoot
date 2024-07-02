@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,10 +22,10 @@ public class Pedido {
     private Long id;
     @ManyToOne(optional = true)
     private Cliente cliente;
-    @ManyToMany(mappedBy = "pedidos", cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<Item> itens;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date data;
+    private LocalDateTime data;
     @Min(1)
     private Double valorTotal;
 }

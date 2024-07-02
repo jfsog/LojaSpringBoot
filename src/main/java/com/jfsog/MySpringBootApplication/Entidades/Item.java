@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Item{
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Size(min = 2, max=30, message="O tamanho do nome deve ser entre {min} e {max} caracteres")
+    @Size(min = 2, max = 30, message = "O tamanho do nome deve ser entre {min} e {max} caracteres")
     private String nome;
     @NotNull
-    @Min(value = 2, message="O valor mínimo deve ser {min} reais")
+    @Min(value = 2, message = "O valor mínimo deve ser {min} reais")
     private Double preco;
 }

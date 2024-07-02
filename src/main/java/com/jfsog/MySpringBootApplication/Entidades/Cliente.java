@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 
@@ -31,7 +29,10 @@ public class Cliente {
             message = "O tamanho do endereço deve ser entre {min} e {max} caracteres"
     )
     private String endereco;
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-    @Cascade(CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Pedido> pedidos;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+        pedidos.forEach(p -> p.setCliente(this));
+    }
 }
