@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta charset="UTF-8">
+   <title>Item</title>
+</head>
+<body>
+<h1 layout:fragment="header">Cadastro de item</h1>
+<div class="input-form" layout:fragment="content">
+   <div class="well">
+      <form action="#" class="form-horizontal" id="itemForm" method="post" th:action="@{/itens/(form)}" th:object="${item}">
+         <div class="alert alert-error" th:if="${#fields.hasErrors('*')}">
+            <p th:each="error : ${#fields.errors('*')}" th:text="${error}">Erro de validação</p>
+         </div>
+         <input th:class="${#fields.hasErrors('id')}?'field-error'" th:field="*{'id'}" type="hidden">
+         <div class="form-group">
+            <label class="control-label col-sm-2" for="nome">Nome</label>
+            <input class="col-sm-10" th:class="${#fields.hasErrors('nome')} ? 'field-error'" th:field="*{nome}" type="text"/>
+
+         </div>
+         <div class="form-group">
+            <label class="control-label col-sm-2" for="text">Preço</label>
+            <input class="col-sm-10" th:class="${#fields.hasErrors('preco')} ? 'field-error'" th:field="*{preco}" type="text"/>
+         </div>
+         <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Gravar">
+         </div>
+         <br/>
+         <a href="itens.html" th:href="@{/itens/}">Voltar</a>
+      </form>
+   </div>
+</div>
+</body>
+</html>

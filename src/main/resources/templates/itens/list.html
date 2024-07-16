@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta charset="UTF-8">
+   <title>Itens</title>
+</head>
+<body>
+<h1 layout:fragment="header">Lista de itens</h1>
+<div class="container" layout:fragment="content">
+   <a href="form.html" th:href="@{/itens/novo}">Novo item</a>
+   <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">
+      Mensagem
+   </div>
+   <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+         <td>ID</td>
+         <td>Nome</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${itens.empty}">
+         <td colspan="3">Sem itens</td>
+      </tr>
+      <tr th:each="item : ${itens}">
+         <td th:text="${item.id}">1</td>
+         <td><a href="view.html" th:href="@{'/itens/'+${item.id}}" th:text="${item.nome}">Nome</a></td>
+      </tr>
+      </tbody>
+   </table>
+</div>
+</body>
+</html>

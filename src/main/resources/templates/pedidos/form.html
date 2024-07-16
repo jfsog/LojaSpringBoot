@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta charset="UTF-8">
+   <title>Pedido</title>
+   <script>
+       $(function () {
+           $("#data").datepicker({
+               changeMonth: true,
+               changeYear: true,
+               dateFormat: 'dd-mm-yy'
+           });
+       });
+   </script>
+</head>
+<body>
+<h1 layout:fragment="header">Cadastro de pedido</h1>
+<div class="input-form" layout:fragment="content">
+   <div class="well">
+      <form action="#" class="form-horizontal" id="pedidoForm" method="post" th:action="@{/pedidos/(form)}" th:object="${pedido}">
+         <div class="alert alert-error" th:if="${#fields.hasErrors('*')}">
+            <p th:each="error : ${#fields.errors('*')}" th:text="${error}">Erro de validação</p>
+         </div>
+         <input th:class="${#fields.hasErrors('id')}?'field-error'" th:field="*{id}" type="hidden">
+         <div class="form-group">
+            <label class="control-label col-sm-2" for="nome">Nome</label>
+            <select class="col-sm-10" th:field="*{cliente}">
+               <option th:each="cliente :${todosClientes}"
+                       th:text="${cliente.nome}"
+                       th:value="${cliente.id}"/>
+            </select>
+         </div>
+         <div class="form-group">
+            <label class="control-label col-sm-2" for="text">Data</label>
+            <input class="col-sm-10" id="data" th:class="${#fields.hasErrors('data')} ? 'field-error'" th:field="*{data}" type="text">
+         </div>
+         <div th:class="form-group">
+            <label class="control-label col-sm-2" for="text">Itens</label>
+            <select id="itemList" multiple="multiple" name="itemListId" th:field="${itens}">
+               <option th:each="item :${todosItens}"
+                       th:text="${item.nome}"
+                       th:value="${{item}}"/>
+            </select>
+         </div>
+         <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Gravar">
+         </div>
+         <br/>
+         <a href="pedidos.html" th:href="@{/pedidos/}">Voltar</a>
+      </form>
+   </div>
+</div>
+</body>
+</html>
